@@ -146,6 +146,25 @@ public class MainActivity extends AppCompatActivity {
         mPauseButton.setVisibility(View.VISIBLE);
     }
 
+    @OnClick (R.id.reset_recording)
+    void resetRecording() {
+        mMusicPlayer.setResetRecordingButton();
+    }
+
+    @OnClick (R.id.info)
+    void setInfoDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.about))
+                .setMessage(getString(R.string.about_message))
+                .setPositiveButton(getString(R.string.got_it), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5

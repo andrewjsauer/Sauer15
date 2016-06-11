@@ -5,23 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
+    android:background="#22495B"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="andrewjsauer.sauer15.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:padding="12dp">
 
 
     <ImageButton
-        android:id="@+id/reset_recording"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/info"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="#00000000"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_reset_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/play"
-        android:layout_alignStart="@+id/play"/>
+        android:src="@drawable/ic_info_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
 
 
     <ImageButton
@@ -45,18 +46,40 @@
         android:layout_alignStart="@+id/play"/>
 
 
+    <ImageButton
+        android:id="@+id/reset_recording"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#00000000"
+        android:src="@drawable/ic_reset_button_santi"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
     <TextView
         android:id="@+id/track_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="00:00"
-        android:textColor="#0E3B5E"
-        android:textSize="30sp"
-        tools:text="16:02"
+        android:textColor="#FFF"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        android:textAlignment="center"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:paddingBottom="12dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sauer meditation 15"
+        android:id="@+id/title"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_alignParentTop="true"/>
 
 
 </RelativeLayout>
