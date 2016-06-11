@@ -4,10 +4,10 @@
 
     <string name="about">About</string>
     <string name="about_message">
-        This app is a 15 minute app
-        designed to give you a simple experience.\n \nMeditation done by Brother Camilius, learn more at
-        brothercamilus.com. \n \nDesign done by Santiago Garza.\n \nPlease send your comments and questions to
-        sauerapps@gmail.com</string>
+        This is a 15 minute meditation app
+        with the intention of a simple experience.\n \nMeditation by Brother Camillus FSC, meditate more at
+        brothercamillus.com. \n \nDesign by Santiago Gonzalez-Garza.\n \nPlease send your comments and questions to
+        sauerapps@gmail.com.</string>
 
     <string name="got_it">got it</string>
 </resources>

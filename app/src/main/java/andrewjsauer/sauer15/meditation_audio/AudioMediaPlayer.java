@@ -152,7 +152,6 @@ public class AudioMediaPlayer {
 
     public void setResetRecordingButton() {
         mPlayer.seekTo(0);
-        play();
     }
 
     public void setFastForwardButton() {

@@ -33,4 +33,8 @@ dependencies {
     /* EventBus */
     compile 'org.greenrobot:eventbus:3.0.0'
 
+    /* Firebase */
+    compile 'com.google.firebase:firebase-crash:9.0.2'
+
 }
+apply plugin: 'com.google.gms.google-services'

@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Locale;
@@ -91,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FirebaseCrash.log("Activity created");
+
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
@@ -126,6 +131,14 @@ public class MainActivity extends AppCompatActivity {
         mDurationHandler.removeCallbacks(updateDuration);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        FirebaseCrash.log("Activity destroyed");
+
+    }
+
     @OnClick (R.id.pause)
     void setPause() {
         mMusicPlayer.pause();
@@ -148,11 +161,19 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick (R.id.reset_recording)
     void resetRecording() {
+
         mMusicPlayer.setResetRecordingButton();
+
+        if (!mMusicPlayer.mAudioIsPlaying) {
+            mTrackTime.setText("00:00");
+        }
     }
 
     @OnClick (R.id.info)
     void setInfoDialog() {
+
+        setPause();
+
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.about))
                 .setMessage(getString(R.string.about_message))
