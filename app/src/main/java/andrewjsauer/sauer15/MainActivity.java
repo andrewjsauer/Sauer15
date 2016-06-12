@@ -11,14 +11,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -97,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        FirebaseCrash.log("Activity created");
-
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
@@ -144,15 +141,13 @@ public class MainActivity extends AppCompatActivity {
 
         exitAudioDetails();
 
-        FirebaseCrash.log("Activity destroyed");
-
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "App Close");
         mFirebaseAnalytics.logEvent("App Close", bundle);
 
     }
 
-    @OnClick (R.id.pause)
+    @OnClick(R.id.pause)
     void onPauseAudio() {
         mMusicPlayer.pause();
 
@@ -166,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent("Pause", bundle);
     }
 
-    @OnClick (R.id.play)
+    @OnClick(R.id.play)
     void onPlayAudio() {
         mMusicPlayer.play();
 
@@ -180,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent("Play", bundle);
     }
 
-    @OnClick (R.id.reset_recording)
+    @OnClick(R.id.reset_recording)
     void onResetRecording() {
 
         mMusicPlayer.setResetRecordingButton();
@@ -194,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent("Reset", bundle);
     }
 
-    @OnClick (R.id.info)
+    @OnClick(R.id.info)
     void onAbout() {
 
         onPauseAudio();
