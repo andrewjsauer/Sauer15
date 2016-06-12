@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     protected ImageButton mPauseButton;
 
     static AudioMediaPlayer mMusicPlayer;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private boolean mHeadsetConnected = false;
     private Handler mDurationHandler = new Handler();
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 if (mHeadsetConnected && intent.getIntExtra("state", 0) == 0) {
                     mHeadsetConnected = false;
                     if (mMusicPlayer.mAudioIsPlaying) {
-                        setPause();
+                        onPauseAudio();
                         Log.d(TAG, "Headset was unplugged during playback.");
 
                     }
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         FirebaseCrash.log("Activity created");
 
@@ -112,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
     private void initializeScreen() {
 
         mMusicPlayer.setAudio();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "App Open");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
     }
 
     @Override
@@ -135,44 +142,66 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        exitAudioDetails();
+
         FirebaseCrash.log("Activity destroyed");
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "App Close");
+        mFirebaseAnalytics.logEvent("App Close", bundle);
 
     }
 
     @OnClick (R.id.pause)
-    void setPause() {
+    void onPauseAudio() {
         mMusicPlayer.pause();
 
         mDurationHandler.removeCallbacks(updateDuration);
 
         mPlayButton.setVisibility(View.VISIBLE);
         mPauseButton.setVisibility(View.INVISIBLE);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "onPauseAudio");
+        mFirebaseAnalytics.logEvent("Pause", bundle);
     }
 
     @OnClick (R.id.play)
-    void setPlay() {
+    void onPlayAudio() {
         mMusicPlayer.play();
 
         mDurationHandler.postDelayed(updateDuration, 100);
 
         mPlayButton.setVisibility(View.INVISIBLE);
         mPauseButton.setVisibility(View.VISIBLE);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "onPlayAudio");
+        mFirebaseAnalytics.logEvent("Play", bundle);
     }
 
     @OnClick (R.id.reset_recording)
-    void resetRecording() {
+    void onResetRecording() {
 
         mMusicPlayer.setResetRecordingButton();
 
         if (!mMusicPlayer.mAudioIsPlaying) {
             mTrackTime.setText("00:00");
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "resetRecording");
+        mFirebaseAnalytics.logEvent("Reset", bundle);
     }
 
     @OnClick (R.id.info)
-    void setInfoDialog() {
+    void onAbout() {
 
-        setPause();
+        onPauseAudio();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "onAbout");
+        mFirebaseAnalytics.logEvent("About", bundle);
 
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.about))
@@ -214,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     public void onEvent(EventAudioPaused eventAudioPaused) {
-        setPause();
+        onPauseAudio();
     }
 
 
