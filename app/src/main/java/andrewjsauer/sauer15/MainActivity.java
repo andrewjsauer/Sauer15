@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean mHeadsetConnected = false;
     private Handler mDurationHandler = new Handler();
     private double mTimeElapsed = 0;
+
+    private PowerManager.WakeLock mWakeLock;
+
 
     private Runnable updateDuration = new Runnable() {
         public void run() {
@@ -116,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "App Open");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "WakeLock");
+
+        mWakeLock.acquire();
     }
 
     @Override
@@ -228,6 +237,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void exitAudioDetails() {
+
+        mWakeLock.release();
 
         mMusicPlayer.exitAudio();
 

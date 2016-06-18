@@ -102,6 +102,13 @@ public class AudioMediaPlayer {
 
     public void setAudio() {
         mPlayer = MediaPlayer.create(mContext, R.raw.fifteen_minute_meditation);
+
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                pauseAudioLoss();
+            }
+        });
     }
 
     public void play() {
