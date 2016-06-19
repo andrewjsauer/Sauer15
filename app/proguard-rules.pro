@@ -18,6 +18,12 @@
 
 # Retain generated class which implement ViewBinder.
 
+-keepattributes SourceFile,LineNumberTable
+
+-keepclassmembers class andrewjsauer.sauer15.xxxx {
+   public *;
+}
+
 -keep public class * implements butterknife.internal.ViewBinder { public <init>(); }
 
 # Prevent obfuscation of types which use ButterKnife annotations since the simple name
